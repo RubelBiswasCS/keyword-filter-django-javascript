@@ -5,5 +5,6 @@ app_name='analyzer'
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="home.html"),name='home'),
-    path("search",views.search,name='search')
+    path("search",views.search,name='search'),
+    path("analyzer",views.analyzer,name='analyzer'),
 ]

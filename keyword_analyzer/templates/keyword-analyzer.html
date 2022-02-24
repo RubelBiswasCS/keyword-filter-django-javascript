@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<form action="{% url 'analyzer:search' %}" method="post">
+    {% csrf_token %}
+    
+</form>
+<div class="keyword-list">
+    <ul>
+        {% for item in keywords%}
+            <li>{{item.keyword}} | {{item.user}} | {{item.search_date}}</li>
+         {% endfor %}
+    </ul>
+
+</div>
+{% endblock %}
