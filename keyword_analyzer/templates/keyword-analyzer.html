@@ -1,15 +1,66 @@
 {% extends 'base.html' %}
 {% block content %}
-<form action="{% url 'analyzer:search' %}" method="post">
-    {% csrf_token %}
-    
-</form>
-<div class="keyword-list">
-    <ul>
-        {% for item in keywords%}
-            <li>{{item.keyword}} | {{item.user}} | {{item.search_date}}</li>
-         {% endfor %}
-    </ul>
+<div class="wrapper">
+    <div class="filter">
+        <h6>Users</h6>
+        <div class="users-list">
 
+        </div>
+       
+     
+        
+        
+    </div>
+
+
+    <div class="keywords">
+        <h6>Keywords</h6>
+        <ul  class="keywords-list">
+            <!-- {% for item in keywords%}
+                <li>{{item.keyword}} | {{item.user}} | {{item.search_date}}</li>
+            {% endfor %} -->
+            
+        </ul>
+
+    </div>
+<script> 
+    // alert('js loaded again')
+    //testAlert('test')
+   
+    fetch('/data')
+    .then( response => response.json())
+    .then( result => {
+        //console.log(result)
+        const keywords=result[0]
+        const users=result[1]
+        const keywordList = document.getElementsByClassName('keywords-list')[0]
+        const userList = document.getElementsByClassName('users-list')[0]
+        console.log(keywordList)
+        console.log(userList)
+        users.forEach(user =>{
+            //console.log(user)
+            userList.innerHTML+= `<div class="user-filter">
+                    <input type="checkbox" class="checkbox" name="${user.username}" id="${user.id}">
+                    <label for="${user.id}">${user.username}</label>
+                </div>`;
+        })
+        keywords.forEach(item => {
+            //console.log(item)
+            keywordList.innerHTML += `<li>${item.keyword} | ${item.user} | ${item.search_date}</li>`
+        });
+        console.log('should called first')
+        getCheckboxs(keywords)
+        
+        })
+        
+        
+        ///testAlert('test')
+    // const keywords = '{{ keywords }}'
+    // console.log(keywords)
+    //const filteredKeywords = filterKeywords(keywords)
+    
+        
+</script>
 </div>
+
 {% endblock %}
