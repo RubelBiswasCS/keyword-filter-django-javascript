@@ -33,6 +33,7 @@
         //console.log(result)
         const keywords=result[0]
         const users=result[1]
+        const searchHistory=result[2]
         const keywordList = document.getElementsByClassName('keywords-list')[0]
         const userList = document.getElementsByClassName('users-list')[0]
         console.log(keywordList)
@@ -46,7 +47,7 @@
         })
         keywords.forEach(item => {
             //console.log(item)
-            keywordList.innerHTML += `<li>${item.keyword} | ${item.user} | ${item.search_date}</li>`
+            keywordList.innerHTML += `<li>${item.name} ( found ${item.count} times) </li>`
         });
         console.log('should called first')
         getCheckboxs(keywords)

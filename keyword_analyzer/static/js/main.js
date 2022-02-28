@@ -18,7 +18,7 @@ function getCheckboxs(keywords){
             keywordList.innerHTML=''
             filteredKeywords.forEach(item => {
                 //console.log(item)
-                keywordList.innerHTML += `<li>${item.keyword} | ${item.user} | ${item.search_date}</li>`
+                keywordList.innerHTML += `<li>${item.name} ( found ${item.count} times) </li>`
             });
 
         })
@@ -28,11 +28,25 @@ function getCheckboxs(keywords){
 
 const filterKeywords = (keywords) => {
     //console.log(keywords)
-    return keywords.filter( (keyword) => {
-        let currentCheckbox = document.getElementById(keyword.user)
-        //console.log(currentCheckbox)
-        if (currentCheckbox.checked){
-            return true;
+    const checkboxs = document.getElementsByClassName('checkbox');
+
+    console.log(checkboxs)
+    var checkedIds = []
+    for (let i of checkboxs){
+        console.log(i.checked)
+        if(i.checked){
+            checkedIds = [...checkedIds, i.id]
         }
+        
+    }
+   console.log(checkedIds)
+    return keywords.filter( (keyword) => {
+        return keyword.search_history.some((i) => {
+            console.log(i.user.id)
+            if(checkedIds.includes(i.user.id.toString())){
+                return true;
+            }
+        })
     })
+
 }

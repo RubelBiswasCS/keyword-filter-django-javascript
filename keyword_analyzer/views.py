@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from .models import SearchHistory
+from .models import SearchHistory,Keyword
 from django.http import JsonResponse,HttpResponse
 from .models import User
 import json
-from .serializers import UserSerializer,SearchHistorySerializer
+from .serializers import UserSerializer,SearchHistorySerializer,KeywordSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -15,7 +15,19 @@ def search(request):
     print(request.user)
     if request.method == 'POST':
         for keyword in keywords:
-            SearchHistory.objects.create(user=request.user,keyword=keyword)
+            try:
+                kwd = Keyword.objects.get(name=keyword)
+                kwd.count += 1
+                history=SearchHistory.objects.create(user=request.user)
+                kwd.search_history.add(history)
+                history.save()
+                kwd.save()
+            except:
+                kwd = Keyword.objects.create(name=keyword,count=1)
+                history=SearchHistory.objects.create(user=request.user)
+                kwd.search_history.add(history)
+                history.save()
+                kwd.save()
         context = {
             'search_text': search_text,
         }
@@ -36,12 +48,13 @@ def analyzer(request):
 
 class DataList(APIView):
     def get(self,request):
-
-        keywords=SearchHistory.objects.all()
-        keywords = SearchHistorySerializer(keywords,many=True)
+        keywords=Keyword.objects.all()
+        keywords = KeywordSerializer(keywords,many=True)
+        search_history=SearchHistory.objects.all()
+        search_history = SearchHistorySerializer(search_history,many=True)
         users = User.objects.all()
         print(users)
         users = UserSerializer(users,many=True)
-        data = [keywords.data,users.data]
+        data = [keywords.data,users.data,search_history.data]
         return Response(data,status=status.HTTP_200_OK)
 
