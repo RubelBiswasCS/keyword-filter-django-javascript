@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 
 class SearchHistory(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    search_date = models.DateTimeField(auto_now_add=True)
+    search_date = models.DateTimeField(auto_now_add=True,editable=True)
+    search_date.editable=True
 
     class Meta:
         verbose_name='Search History'

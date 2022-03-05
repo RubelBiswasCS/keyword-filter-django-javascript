@@ -8,11 +8,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 def search(request):
-    print('keywords')
+    # print('keywords')
     search_text = request.POST['search-text']
     keywords = search_text.split(' ')
-    print(keywords)
-    print(request.user)
+    # print(keywords)
+    # print(request.user)
     if request.method == 'POST':
         for keyword in keywords:
             try:
