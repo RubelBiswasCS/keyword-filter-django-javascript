@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-<form action="{% url 'analyzer:search' %}" method="post">
-    {% csrf_token %}
-    <input type="text" id="search-text" name="search-text">
-    <input type="submit" value="search">
-</form>
+<div class="search-home">
+    <form action="{% url 'analyzer:search' %}" method="post" >
+        {% csrf_token %}
+        <div class="search-box">
+            <input type="text" id="search-text" name="search-text">
+            <button type="button" id="clear">x</button>
+            <input type="submit" id="submit" value="Search">
+        </div>
+        
+    </form>
+</div>
+
 {% endblock %}

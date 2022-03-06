@@ -2,6 +2,10 @@
 {% block content %}
 <div class="wrapper">
     <div class="filter">
+        <h6>Users</h6>
+        <div class="users-list">
+
+        </div>
         <h6>Filter by count</h6>
         <div class="count-list">
             <div class="count-filter">
@@ -49,14 +53,18 @@
         <h6>Select Date:</h6>
         <div class="custom-date-input">
             <div class="custom-date-filter">
-                <input type="date" id='start-date' class="custom-date-input" />
-                <input type="date" id='end-date' class="custom-date-input" />
+                <div class="input-group">
+                    <label for="start-date">Select Start Date</label>
+                    <input type="date" id='start-date' class="custom-date-input" />
+                </div>
+                <div class="input-group">
+                    <label for="start-date">Select Start Date</label>
+                    <input type="date" id='end-date' class="custom-date-input" />
+                </div>
+               
             </div>
         </div>
-        <h6>Users</h6>
-        <div class="users-list">
-
-        </div>
+        
 
 
 
@@ -89,10 +97,11 @@
                 const userList = document.getElementsByClassName('users-list')[0]
 
                 users.forEach(user => {
-                    userList.innerHTML += `<div class="user-filter">
-                    <input type="checkbox" class="checkbox by-user" name="${user.username}" id="${user.id}">
-                    <label for="${user.id}">${user.username}</label>
-                </div>`;
+                    userList.innerHTML += `
+                        <div class="user-filter">
+                            <input type="checkbox" class="checkbox by-user" name="${user.username}" id="${user.id}">
+                            <label for="${user.id}">${user.username}</label>
+                        </div>`;
                 })
                 keywords.forEach((item, i) => {
                     keywordList.innerHTML += `<li>${i + 1}. ${item.name} ( found ${item.count} times) </li>`
