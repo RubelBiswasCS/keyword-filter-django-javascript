@@ -44,75 +44,68 @@
                 <input type="checkbox" class="checkbox date" name="custom-date" id="custom-date">
                 <label for="custom-date">Custom date filter</label>
             </div>
-            
+
         </div>
         <h6>Select Date:</h6>
         <div class="custom-date-input">
             <div class="custom-date-filter">
-                <input type="date" id='start-date' class="custom-date-input"/>
-                <input type="date" id='end-date' class="custom-date-input"/>
+                <input type="date" id='start-date' class="custom-date-input" />
+                <input type="date" id='end-date' class="custom-date-input" />
             </div>
         </div>
         <h6>Users</h6>
         <div class="users-list">
 
         </div>
-       
-     
-        
-        
+
+
+
+
     </div>
 
 
     <div class="keywords">
         <h6>Keywords</h6>
-        <ul  class="keywords-list">
+        <ul class="keywords-list">
             <!-- {% for item in keywords%}
                 <li>{{item.keyword}} | {{item.user}} | {{item.search_date}}</li>
             {% endfor %} -->
-            
+
         </ul>
 
     </div>
-<script> 
-    // alert('js loaded again')
-    //testAlert('test')
-   
-    fetch('/data')
-    .then( response => response.json())
-    .then( result => {
-        //console.log(result)
-        const keywords=result[0]
-        const users=result[1]
-        const searchHistory=result[2]
-        const keywordList = document.getElementsByClassName('keywords-list')[0]
-        const userList = document.getElementsByClassName('users-list')[0]
-        console.log(keywordList)
-        console.log(userList)
-        users.forEach(user =>{
-            //console.log(user)
-            userList.innerHTML+= `<div class="user-filter">
+    <script>
+
+        //testAlert('test')
+
+        fetch('/data')
+            .then(response => response.json())
+            .then(result => {
+                //console.log(result)
+                const keywords = result[0]
+                const users = result[1]
+                const searchHistory = result[2]
+                const keywordList = document.getElementsByClassName('keywords-list')[0]
+                const userList = document.getElementsByClassName('users-list')[0]
+
+                users.forEach(user => {
+                    userList.innerHTML += `<div class="user-filter">
                     <input type="checkbox" class="checkbox by-user" name="${user.username}" id="${user.id}">
                     <label for="${user.id}">${user.username}</label>
                 </div>`;
-        })
-        keywords.forEach((item,i) => {
-            //console.log(item)
-            keywordList.innerHTML += `<li>${i+1}. ${item.name} ( found ${item.count} times) </li>`
-        });
-        
-        handleFilters(keywords)
-        // customDateFilter()
-        })
-        
-        
-        ///testAlert('test')
-    // const keywords = '{{ keywords }}'
-    // console.log(keywords)
-    //const filteredKeywords = filterKeywords(keywords)
-    
-        
-</script>
+                })
+                keywords.forEach((item, i) => {
+                    keywordList.innerHTML += `<li>${i + 1}. ${item.name} ( found ${item.count} times) </li>`
+                });
+
+                handleFilters(keywords)
+
+            })
+
+
+
+
+    </script>
 </div>
 
 {% endblock %}
