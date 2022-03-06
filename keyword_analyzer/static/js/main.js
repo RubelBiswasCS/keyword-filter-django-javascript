@@ -4,23 +4,33 @@ const testAlert = (value) => {
     alert('js loaded')
 }
 
-function getCheckboxs(keywords){
+function handleFilters(keywords){
     
     const checkboxs = document.getElementsByClassName('checkbox');
     const keywordList = document.getElementsByClassName('keywords-list')[0]
+    const customDates =  document.getElementsByClassName('custom-date-input')
+    
+    const updateUi = (keywords) => {
+        let filteredKeywords = filterKeywords(keywords)
+        console.log(filteredKeywords)
+        keywordList.innerHTML=''
+        filteredKeywords.forEach((item,i) => {
+            //console.log(item)
+            keywordList.innerHTML += `<li>${i+1}. ${item.name} ( found ${item.count} times) </li>`
+        });
+    }
     for(let i of checkboxs){
         console.log(i.name+' '+i.checked)
         //console.log(i)
         i.addEventListener( 'change' , () => {
-            console.log('changed')
-            let filteredKeywords = filterKeywords(keywords)
-            console.log(filteredKeywords)
-            keywordList.innerHTML=''
-            filteredKeywords.forEach((item,i) => {
-                //console.log(item)
-                keywordList.innerHTML += `<li>${i+1}. ${item.name} ( found ${item.count} times) </li>`
-            });
+            //console.log('changed')
+            updateUi(keywords)
 
+        })
+    }
+    for(let i of customDates){
+        i.addEventListener("input",(e) => {
+            updateUi(keywords);
         })
     }
 
@@ -57,20 +67,17 @@ function getCheckboxs(keywords){
     
 }
 
-const customDateFilter = () => {
-    const startDate=document.getElementById('start-date')
+//custom date filter
+// const customDateFilter = () => {
+//     const startDate=document.getElementById('start-date')
 
-    const endDate=document.getElementById('end-date')
-    const customDates =  document.getElementsByClassName('custom-date-input')
-    console.log('customDates :',customDates)
-    for(let i of customDates){
-        i.addEventListener("input",(e) => {
-            console.log(startDate.value,' ',endDate.value)
-        })
-    }
-    console.log(startDate.value,' ',endDate.value)
-}
+//     const endDate=document.getElementById('end-date')
+//     const customDates =  document.getElementsByClassName('custom-date-input')
+//     console.log('customDates :',customDates)
 
+//     //console.log(startDate.value,' ',endDate.value)
+// }
+//filter according to number of counts
 const filterByCount = (keywords) => {
     const countCheckboxes = document.getElementsByClassName('count')
     let count=0
@@ -92,6 +99,8 @@ const filterByCount = (keywords) => {
         return keyword.count >= parseInt(value.slice(5,value.length))
     })
 }
+
+//filtr by searching date
 const filterByDate = (keywords) => {
     let today = new Date();
     const dateCheckboxes = document.getElementsByClassName('date')
@@ -106,6 +115,29 @@ const filterByDate = (keywords) => {
     }
     if(value==='anytime' || count===0){
         return keywords;
+    }
+
+    //filter for custom date input
+    else if(value==='custom-date'){
+        const startDate=document.getElementById('start-date').value
+        const endDate=document.getElementById('end-date').value
+        if( startDate==="" || endDate===""){
+            return keywords;
+        }
+        return keywords.filter(keyword => {
+            return keyword.search_history.some(i => {
+                var date =i.search_date.slice(0,10)
+                
+                console.log("start and end date")
+                console.log(startDate,' ',endDate)
+                console.log(date >= startDate && date<=endDate)
+                console.log('type of start date',typeof(startDate),"start daTe is: ",startDate)
+                console.log(date,typeof(date))
+                if (date >= startDate && date<=endDate ){
+                    return true
+                }
+            });
+        });
     }
     else{
         switch (value) {
@@ -150,8 +182,8 @@ const filterKeywords = (keywords) => {
     }
    //console.log(checkedIds)
     
-    var keywords = filterByDate(keywords)
     var keywords = filterByCount(keywords)
+    var keywords = filterByDate(keywords)
     if(checkedIds.length===0){
         return keywords;
     }

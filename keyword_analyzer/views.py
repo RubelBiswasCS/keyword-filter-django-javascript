@@ -22,12 +22,14 @@ def search(request):
                 kwd.search_history.add(history)
                 history.save()
                 kwd.save()
+                print('modified')
             except:
                 kwd = Keyword.objects.create(name=keyword,count=1)
                 history=SearchHistory.objects.create(user=request.user)
                 kwd.search_history.add(history)
                 history.save()
                 kwd.save()
+                print('created')
         context = {
             'search_text': search_text,
         }

@@ -25,6 +25,10 @@
         <h6>Filter by date</h6>
         <div class="date-list">
             <div class="date-filter">
+                <input type="checkbox" class="checkbox date" name="anytime" id="anytime">
+                <label for="anytime">Anytime</label>
+            </div>
+            <div class="date-filter">
                 <input type="checkbox" class="checkbox date" name="day" id="day">
                 <label for="day">See data from yesterday</label>
             </div>
@@ -37,9 +41,10 @@
                 <label for="month">See data from last month</label>
             </div>
             <div class="date-filter">
-                <input type="checkbox" class="checkbox date" name="anytime" id="anytime">
-                <label for="anytime">Anytime</label>
+                <input type="checkbox" class="checkbox date" name="custom-date" id="custom-date">
+                <label for="custom-date">Custom date filter</label>
             </div>
+            
         </div>
         <h6>Select Date:</h6>
         <div class="custom-date-input">
@@ -95,9 +100,9 @@
             //console.log(item)
             keywordList.innerHTML += `<li>${i+1}. ${item.name} ( found ${item.count} times) </li>`
         });
-        console.log('should called first')
-        getCheckboxs(keywords)
-        customDateFilter()
+        
+        handleFilters(keywords)
+        // customDateFilter()
         })
         
         
