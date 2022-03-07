@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-u(q1w0ls($wg$^sqpv=@n*cm7tcq%((25qp2vsh6#$&d+1uka=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['rb-keyword-filter.herokuapp.com']
 
 
 # Application definition
