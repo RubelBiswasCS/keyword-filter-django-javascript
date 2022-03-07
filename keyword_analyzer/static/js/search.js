@@ -1,6 +1,7 @@
 
 const clearBtn=document.getElementById("clear")
 const textBox=document.getElementById("search-text")
+// console.log(clearBtn,textBox)
 if(textBox.value===''){
     clearBtn.style.visibility = 'hidden';
 }
